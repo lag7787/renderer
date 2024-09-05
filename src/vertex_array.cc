@@ -1,6 +1,5 @@
 #include "vertex_array.h"
 #include "renderer.h"
-#include <iostream>
 
 VertexArray::VertexArray() {
     glCall(glGenVertexArrays(1, &m_RendererID));

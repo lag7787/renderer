@@ -10,6 +10,7 @@
 #include "vertex_buffer.h"
 #include "index_buffer.h"
 #include "vertex_array.h"
+#include "texture.h"
 
 float face_opacity = 0.5;
 
@@ -84,34 +85,33 @@ int main() {
 
     stbi_set_flip_vertically_on_load(true);
 
-    unsigned int texture1;
-    glCall(glGenTextures(1, &texture1));
-    glCall(glBindTexture(GL_TEXTURE_2D, texture1));
-    glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-    glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
-    glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
-    glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)); // do i have to do this a second time? 
+    Texture tex1(GL_TEXTURE_2D, GL_TEXTURE1, 1);
+    tex1.AddParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
+    tex1.AddParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
+    tex1.AddParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    tex1.AddParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
     int width, height, nrChannels;
+
     unsigned char* data = stbi_load("/home/lucgarabrant/Documents/Projects/openglcc/assets/container.jpg", &width, &height, &nrChannels, 0);
     if(data) {
-        glCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data));
-        glCall(glGenerateMipmap(GL_TEXTURE_2D));
+        tex1.BuildImage(width, height, data, GL_RGB, GL_RGB);
+        tex1.GenerateMipMip();
     } else {
         std::cout << "Failed to load texture1" << std::endl;
     }
     stbi_image_free(data);
 
-    unsigned int texture2;
-    glCall(glGenTextures(1, &texture2));
-    glCall(glBindTexture(GL_TEXTURE_2D, texture2));
-    glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-    glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
-    glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
-    glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)); // do i have to do this a second time? 
+    Texture tex2(GL_TEXTURE_2D, GL_TEXTURE2, 2);
+    tex2.AddParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
+    tex2.AddParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
+    tex2.AddParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    tex2.AddParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
     data = stbi_load("/home/lucgarabrant/Documents/Projects/openglcc/assets/awesomeface.png", &width, &height, &nrChannels, 0);
     if (data) {
-        glCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data));
-        glCall(glGenerateMipmap(GL_TEXTURE_2D));
+        tex2.BuildImage(width, height, data, GL_RGBA, GL_RGBA);
+        tex1.GenerateMipMip();
     } else {
         std::cout << "Faield to laod texture2" << std::endl;
     }
@@ -119,27 +119,20 @@ int main() {
     stbi_image_free(data);
 
     ourShader.use();
-    ourShader.setInt("texture1", 0);
-    ourShader.setInt("texture2", 1);
+    ourShader.setInt("texture1", tex1.GetTextureNumber()); //creating a unifrom to refernce texture units? 
+    ourShader.setInt("texture2", tex2.GetTextureNumber());
     glfwSetKeyCallback(window, processInput);
 
+    // an iteration of the render loop is called a frame
    while (!glfwWindowShouldClose(window)) {
-       // an iteration of the render loop is called a frame
-       // input
-       //rendering commands
        ourShader.setFloat("face_opacity", face_opacity);
        glCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
        glCall(glClear(GL_COLOR_BUFFER_BIT));
-    //   //ourShader.setFloat("horizontalOffset", -0.5);
-    //   //ourShader.setFloat("verticalOffset", 0.5);
-       glCall(glActiveTexture(GL_TEXTURE0));
-       glCall(glBindTexture(GL_TEXTURE_2D, texture1)); // do i have to bind again?
-       glCall(glActiveTexture(GL_TEXTURE1));
-       glCall(glBindTexture(GL_TEXTURE_2D, texture2)); // do i have to bind again?
+    //   ourShader.setFloat("horizontalOffset", -0.5);
+    //   ourShader.setFloat("verticalOffset", 0.5);
        va.Bind();
 
-       //glCall(glBindVertexArray(VAO));
-
+        // maybe called by the rednerer? 
        glCall(glDrawElements(GL_TRIANGLES, 6 ,GL_UNSIGNED_INT, 0));
 
        // check and call events and swap buffers

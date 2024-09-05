@@ -6,8 +6,10 @@ in vec3 ourColor;
 
 in vec4 ourPosition;
 
+// assigning texture units to the sampler
 uniform sampler2D texture1;
-uniform sampler2D texture2;
+uniform sampler2D texture2; 
+
 uniform float face_opacity;
 
 void main()
