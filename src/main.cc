@@ -2,6 +2,9 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+//#include <glm/glm.hpp>
+//#include <glm/gtc/matrix_transform.hpp>
+//#include <glm/gtc/type_ptr.hpp>
 #include "glad/glad.h"
 #include "glfw3.h"
 #include "shader.h"
@@ -38,6 +41,7 @@ void processInput(GLFWwindow *window, int key, int scancode, int action, int mod
 int main() {
 
     // could potentially abstract this as well? init setup? would need to see some best practicves
+    std::cout <<"hello, world" << std::endl;
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // api major and minor version that the client must be compatible with
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -118,10 +122,16 @@ int main() {
 
     stbi_image_free(data);
 
+   // glm::mat4 trans = glm::mat4(1.0f);
+   // trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+   // trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));  
+
     ourShader.use();
     ourShader.setInt("texture1", tex1.GetTextureNumber()); //creating a unifrom to refernce texture units? 
     ourShader.setInt("texture2", tex2.GetTextureNumber());
+    //ourShader.setMatFour("transform", trans);
     glfwSetKeyCallback(window, processInput);
+
 
     // an iteration of the render loop is called a frame
    while (!glfwWindowShouldClose(window)) {
@@ -140,9 +150,11 @@ int main() {
        glfwPollEvents();
    }
 
-   glCall(glDeleteVertexArrays(1, &va.m_RendererID));
+   glCall(glDeleteVertexArrays(1, &va.m_RendererID)); // could call cleanup for all fo these alternatiely keep refernces to their obejcts
    glCall(glDeleteBuffers(1, &vb.m_RendererID));
    glCall(glDeleteBuffers(1, &ib.m_RendererID));
+   glCall(glDeleteTextures(1, &tex1.m_RendererID));
+   glCall(glDeleteTextures(1, &tex2.m_RendererID));
 
    glfwTerminate();
    return 0;

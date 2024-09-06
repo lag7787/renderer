@@ -26,7 +26,6 @@ void Texture::AddParameter(unsigned int name, unsigned int param) {
 }
 
 void Texture::BuildImage(int width, int height, unsigned char* data, unsigned int internal_foramt, unsigned int format) {
-        std::cout << reinterpret_cast<void *>(data) << std::endl;
         glCall(glTexImage2D(type, 0, internal_foramt, width, height, 0, format, GL_UNSIGNED_BYTE, data));
 }
 
