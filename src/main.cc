@@ -132,30 +132,26 @@ int main() {
     //ourShader.setMatFour("transform", trans);
     glfwSetKeyCallback(window, processInput);
 
+    Renderer ra;
+    ra.AddVertexArray(&va.m_RendererID);
+    ra.AddBuffer(&vb.m_RendererID);
+    ra.AddBuffer(&ib.m_RendererID);
+    ra.AddTexture(&tex1.m_RendererID);
+    ra.AddTexture(&tex2.m_RendererID);
 
     // an iteration of the render loop is called a frame
    while (!glfwWindowShouldClose(window)) {
        ourShader.setFloat("face_opacity", face_opacity);
-       glCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
-       glCall(glClear(GL_COLOR_BUFFER_BIT));
+       ra.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     //   ourShader.setFloat("horizontalOffset", -0.5);
     //   ourShader.setFloat("verticalOffset", 0.5);
        va.Bind();
-
-        // maybe called by the rednerer? 
-       glCall(glDrawElements(GL_TRIANGLES, 6 ,GL_UNSIGNED_INT, 0));
-
-       // check and call events and swap buffers
+       ra.Draw(GL_TRIANGLES, 6, GL_UNSIGNED_INT);
        glfwSwapBuffers(window);
        glfwPollEvents();
    }
 
-   glCall(glDeleteVertexArrays(1, &va.m_RendererID)); // could call cleanup for all fo these alternatiely keep refernces to their obejcts
-   glCall(glDeleteBuffers(1, &vb.m_RendererID));
-   glCall(glDeleteBuffers(1, &ib.m_RendererID));
-   glCall(glDeleteTextures(1, &tex1.m_RendererID));
-   glCall(glDeleteTextures(1, &tex2.m_RendererID));
-
+   ra.Cleanup();
    glfwTerminate();
    return 0;
 }
