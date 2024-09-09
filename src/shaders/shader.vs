@@ -13,8 +13,8 @@ out vec4 ourPosition;
 
 void main()
 {
-    gl_Position =  vec4(aPos.x + horizontalOffset, aPos.y + verticalOffset, aPos.z, 1.0);
+    gl_Position =  transform * vec4(aPos.x + horizontalOffset, aPos.y + verticalOffset, aPos.z, 1.0);
     ourColor = aColor;
-    ourPosition =  vec4(aPos.x + horizontalOffset, aPos.y + verticalOffset, aPos.z, 1.0);
+    ourPosition =  transform * vec4(aPos.x + horizontalOffset, aPos.y + verticalOffset, aPos.z, 1.0);
     TexCoord = aTexCoord;
 }
