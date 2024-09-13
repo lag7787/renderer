@@ -21,9 +21,11 @@ class Renderer {
         std::vector<unsigned int*> buffers;
         std::vector<unsigned int*> textures;
 
+        Renderer();
         void Cleanup();
         void ClearColor(float red, float green, float blue, float alpha);
-        void Draw(unsigned int mode, int count, unsigned int type);
+        void DrawElements(unsigned int mode, unsigned int count, unsigned int type);
+        void Draw(unsigned int mode, unsigned int count);
         void AddVertexArray(unsigned int * id);
         void AddBuffer(unsigned int * id);
         void AddTexture(unsigned int * id);

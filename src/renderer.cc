@@ -25,6 +25,10 @@ bool glLogCall(const char* function, const char* file, int line) {
     return true;
 }
 
+Renderer::Renderer() {
+    glCall(glEnable(GL_DEPTH_TEST));
+}
+
 void Renderer::Cleanup() {
     for (unsigned int i = 0; i < vertexArrays.size(); i++) {
             glCall(glDeleteVertexArrays(1, vertexArrays[i]));
@@ -41,11 +45,15 @@ void Renderer::Cleanup() {
 
 void Renderer::ClearColor(float red, float green, float blue, float alpha) {
        glCall(glClearColor(red, green, blue, alpha));
-       glCall(glClear(GL_COLOR_BUFFER_BIT));
+       glCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
 
-void Renderer::Draw(unsigned int mode, int count, unsigned int type) {
+void Renderer::DrawElements(unsigned int mode, unsigned int count, unsigned int type) {
        glCall(glDrawElements(mode, count ,type, 0));
+}
+
+void Renderer::Draw(unsigned int mode, unsigned int count) {
+       glCall(glDrawArrays(mode, 0, count));
 }
 
 void Renderer::AddVertexArray(unsigned int * id) {

@@ -2,7 +2,6 @@
 out vec4 FragColor;
 
 in vec2 TexCoord;
-in vec3 ourColor;
 
 in vec4 ourPosition;
 
