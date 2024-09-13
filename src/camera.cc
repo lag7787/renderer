@@ -71,13 +71,13 @@ public:
     {
         float velocity = MovementSpeed * deltaTime;
         if (direction == FORWARD)
-            Position += Front * velocity;
+            Position += glm::vec3((Front * velocity).x, Position.y, (Front * velocity).z);
         if (direction == BACKWARD)
-            Position -= Front * velocity;
+            Position -= glm::vec3((Front * velocity).x, Position.y, (Front * velocity).z);
         if (direction == LEFT)
-            Position -= Right * velocity;
+            Position -= glm::vec3((Right * velocity).x, Position.y, (Right * velocity).z);
         if (direction == RIGHT)
-            Position += Right * velocity;
+            Position += glm::vec3((Right * velocity).x, Position.y, (Right * velocity).z);
     }
 
     // processes input received from a mouse input system. Expects the offset value in both the x and y direction.
