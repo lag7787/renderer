@@ -203,10 +203,14 @@ int main() {
    //     ra.Draw(GL_TRIANGLES, 36);
    // }
 
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, cubePositions[10]);
-        ourShader.setMatFour("model", model);
-        ra.DrawInstanced(GL_TRIANGLES, 24, 6, 6);
+    //glm::mat4 model = glm::mat4(1.0f);
+    //model = glm::translate(model, cubePositions[10]);
+    //ourShader.setMatFour("model", model);
+    //ra.DrawInstanced(GL_TRIANGLES, 24, 6, 6);
+    
+    ra.Draw(GL_TRIANGLES, 6);
+
+
 
 
     // could we do it with uniforms? 
