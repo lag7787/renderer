@@ -24,7 +24,7 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 2560;
 const unsigned int SCR_HEIGHT = 1440;
 
-Camera camera(glm::vec3(0.0, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0, 1.0f, 3.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -118,7 +118,8 @@ int main() {
         glm::vec3( 1.3f, -2.0f, -2.5f),  
         glm::vec3( 1.5f,  2.0f, -2.5f), 
         glm::vec3( 1.5f,  0.2f, -1.5f), 
-        glm::vec3(-1.3f,  1.0f, -1.5f)  
+        glm::vec3(-1.3f,  1.0f, -1.5f),
+        glm::vec3(0.0f,  0.0f, 0.0f)  
     };
 
     VertexArray va;
@@ -193,14 +194,21 @@ int main() {
     projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     ourShader.setMatFour("projection", projection);
 
-    for (unsigned int i = 0; i < 10; i++) {
+   // for (unsigned int i = 0; i < 10; i++) {
+   //     glm::mat4 model = glm::mat4(1.0f);
+   //     model = glm::translate(model, cubePositions[i]);
+   //     float angle = 20.0f * i;
+   //     model = glm::rotate(model, glm::radians(angle) , glm::vec3(1.0f, 0.3f, 0.5f));
+   //     ourShader.setMatFour("model", model);
+   //     ra.Draw(GL_TRIANGLES, 36);
+   // }
+
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, cubePositions[i]);
-        float angle = 20.0f * i;
-        model = glm::rotate(model, glm::radians(angle) , glm::vec3(1.0f, 0.3f, 0.5f));
+        model = glm::translate(model, cubePositions[10]);
         ourShader.setMatFour("model", model);
-        ra.Draw(GL_TRIANGLES, 36);
-    }
+        ra.DrawInstanced(GL_TRIANGLES, 24, 6, 6);
+
+
     // could we do it with uniforms? 
     glfwSwapBuffers(window);
     glfwPollEvents();

@@ -56,6 +56,10 @@ void Renderer::Draw(unsigned int mode, unsigned int count) {
        glCall(glDrawArrays(mode, 0, count));
 }
 
+void Renderer::DrawInstanced(unsigned int mode, unsigned int first, unsigned int count, unsigned int primCount) {
+       glCall(glDrawArraysInstanced(mode, first, count, primCount));
+}
+
 void Renderer::AddVertexArray(unsigned int * id) {
     vertexArrays.push_back(id);
 }

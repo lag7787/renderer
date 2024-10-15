@@ -26,6 +26,7 @@ class Renderer {
         void ClearColor(float red, float green, float blue, float alpha);
         void DrawElements(unsigned int mode, unsigned int count, unsigned int type);
         void Draw(unsigned int mode, unsigned int count);
+        void DrawInstanced(unsigned int mode, unsigned int first, unsigned int count, unsigned int primCount);
         void AddVertexArray(unsigned int * id);
         void AddBuffer(unsigned int * id);
         void AddTexture(unsigned int * id);
