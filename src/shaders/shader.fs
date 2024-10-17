@@ -1,6 +1,6 @@
 #version 330 core
-out vec4 FragColor;
-
+//out vec4 FragColor;
+layout(location = 0) out vec4 FragColor;
 in vec2 TexCoord;
 
 in vec4 ourPosition;
@@ -13,6 +13,6 @@ uniform float face_opacity;
 
 void main()
 {
-    FragColor = vec3(0,0,0);
+    FragColor = vec4(0);
 }
    

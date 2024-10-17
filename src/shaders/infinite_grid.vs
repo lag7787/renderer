@@ -1,5 +1,7 @@
 #version 330 core
 
+out vec3 WorldPos;
+
 uniform mat4 view;
 uniform mat4 projection;
 uniform vec3 camera_position;
@@ -17,9 +19,11 @@ void main() {
     int Index = Indices[gl_VertexID];
 
     vec3 vPos3 = Pos[Index];
-    //vPos3.x += camera_position.x
-    //vPos3.z += camera_position.z
+    vPos3.x += camera_position.x;
+    vPos3.z += camera_position.z;
 
     vec4 vPos = vec4(vPos3, 1.0);
     gl_Position = projection * view * vPos;
+
+    WorldPos = vPos3;
 }

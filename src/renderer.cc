@@ -27,6 +27,8 @@ bool glLogCall(const char* function, const char* file, int line) {
 
 Renderer::Renderer() {
     glCall(glEnable(GL_DEPTH_TEST));
+    glCall(glEnable(GL_BLEND));
+    glCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 }
 
 void Renderer::Cleanup() {

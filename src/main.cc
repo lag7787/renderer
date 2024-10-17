@@ -24,7 +24,7 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 2560;
 const unsigned int SCR_HEIGHT = 1440;
 
-Camera camera(glm::vec3(0.0, 1.0f, 3.0f));
+Camera camera(glm::vec3(0.0, 3.0f, 3.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -59,122 +59,15 @@ int main() {
     }
 
     Shader ourShader(
-        "/home/lucgarabrant/Documents/Projects/openglcc/src/shaders/shader.vs",
-        "/home/lucgarabrant/Documents/Projects/openglcc/src/shaders/shader.fs"
+        "/home/lucgarabrant/Documents/Projects/openglcc/src/shaders/infinite_grid.vs",
+        "/home/lucgarabrant/Documents/Projects/openglcc/src/shaders/infinite_grid.fs"
     );
 
-
-    float vertices[] = {
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
-    };
-
-    glm::vec3 cubePositions[] = {
-        glm::vec3( 0.0f,  0.0f,  0.0f), 
-        glm::vec3( 2.0f,  5.0f, -15.0f), 
-        glm::vec3(-1.5f, -2.2f, -2.5f),  
-        glm::vec3(-3.8f, -2.0f, -12.3f),  
-        glm::vec3( 2.4f, -0.4f, -3.5f),  
-        glm::vec3(-1.7f,  3.0f, -7.5f),  
-        glm::vec3( 1.3f, -2.0f, -2.5f),  
-        glm::vec3( 1.5f,  2.0f, -2.5f), 
-        glm::vec3( 1.5f,  0.2f, -1.5f), 
-        glm::vec3(-1.3f,  1.0f, -1.5f),
-        glm::vec3(0.0f,  0.0f, 0.0f)  
-    };
-
     VertexArray va;
-    VertexBuffer vb(vertices, sizeof(vertices));
-    VertexBufferLayout layout;
-    layout.Push<float>(3); // Positions
-    layout.Push<float>(2); // Texture
-    va.AddBuffer(vb, layout);
-
-    stbi_set_flip_vertically_on_load(true);
-
-    Texture tex1(GL_TEXTURE_2D, GL_TEXTURE1, 1);
-    tex1.AddParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
-    tex1.AddParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
-    tex1.AddParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    tex1.AddParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    int width, height, nrChannels;
-
-    unsigned char* data = stbi_load("/home/lucgarabrant/Documents/Projects/openglcc/assets/container.jpg", &width, &height, &nrChannels, 0);
-    if(data) {
-        tex1.BuildImage(width, height, data, GL_RGB, GL_RGB);
-        tex1.GenerateMipMip();
-    } else {
-        std::cout << "Failed to load texture1" << std::endl;
-    }
-    stbi_image_free(data);
-
-    Texture tex2(GL_TEXTURE_2D, GL_TEXTURE2, 2);
-    tex2.AddParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
-    tex2.AddParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
-    tex2.AddParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    tex2.AddParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    data = stbi_load("/home/lucgarabrant/Documents/Projects/openglcc/assets/awesomeface.png", &width, &height, &nrChannels, 0);
-    if (data) {
-        tex2.BuildImage(width, height, data, GL_RGBA, GL_RGBA);
-        tex1.GenerateMipMip();
-    } else {
-        std::cout << "Faield to laod texture2" << std::endl;
-    }
-
-    stbi_image_free(data);
-
-
     ourShader.use();
-    ourShader.setInt("texture1", tex1.GetTextureNumber()); //creating a unifrom to refernce texture units? 
-    ourShader.setInt("texture2", tex2.GetTextureNumber());
+    ourShader.setVecThree("camera_position", camera.Position);
 
     Renderer ra;
-    ra.AddVertexArray(&va.m_RendererID);
-    ra.AddBuffer(&vb.m_RendererID);
-    ra.AddTexture(&tex1.m_RendererID);
-    ra.AddTexture(&tex2.m_RendererID);
-
     glm::mat4 view;
     glm::mat4 projection = glm::mat4(1.0f);
 
@@ -186,34 +79,16 @@ int main() {
 
     processInput(window);
 
-    ra.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    ra.ClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     va.Bind(); 
 
     view = camera.GetViewMatrix();
     ourShader.setMatFour("view", view);
     projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     ourShader.setMatFour("projection", projection);
-
-   // for (unsigned int i = 0; i < 10; i++) {
-   //     glm::mat4 model = glm::mat4(1.0f);
-   //     model = glm::translate(model, cubePositions[i]);
-   //     float angle = 20.0f * i;
-   //     model = glm::rotate(model, glm::radians(angle) , glm::vec3(1.0f, 0.3f, 0.5f));
-   //     ourShader.setMatFour("model", model);
-   //     ra.Draw(GL_TRIANGLES, 36);
-   // }
-
-    //glm::mat4 model = glm::mat4(1.0f);
-    //model = glm::translate(model, cubePositions[10]);
-    //ourShader.setMatFour("model", model);
-    //ra.DrawInstanced(GL_TRIANGLES, 24, 6, 6);
-    
+    ourShader.setVecThree("camera_position", camera.Position);
     ra.Draw(GL_TRIANGLES, 6);
 
-
-
-
-    // could we do it with uniforms? 
     glfwSwapBuffers(window);
     glfwPollEvents();
    }
