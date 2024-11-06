@@ -48,6 +48,7 @@ void Renderer::ClearColor(float red, float green, float blue, float alpha) {
        glCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
 
+
 void Renderer::DrawElements(unsigned int mode, unsigned int count, unsigned int type) {
        glCall(glDrawElements(mode, count ,type, 0));
 }

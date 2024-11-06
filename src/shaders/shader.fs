@@ -13,6 +13,7 @@ uniform float face_opacity;
 
 void main()
 {
-    FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), face_opacity);
+    ///FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), face_opacity);
+    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);
 }
    
