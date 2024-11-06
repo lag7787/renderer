@@ -21,6 +21,7 @@ class Shader {
         void setBool(const std::string &name, bool value) const;
         void setInt(const std::string &name, int value) const;
         void setFloat(const std::string &name, float value) const;
+        void setVecTwo(const std::string &name, glm::vec2 value) const;
         void setMatFour(const std::string &name, glm::mat4 value) const;
         void setFaceOpacity(float new_opacity);
         float getFaceOpacity();

@@ -38,7 +38,6 @@ const float angle = 3.14159626 * 2.0f / steps;
 
 int main() {
 
-    // could potentially abstract this as well? init setup? would need to see some best practicves
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3); // api major and minor version that the client must be compatible with
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -177,6 +176,7 @@ int main() {
     ourShader.use();
     ourShader.setInt("texture1", tex1.GetTextureNumber()); //creating a unifrom to refernce texture units? 
     ourShader.setInt("texture2", tex2.GetTextureNumber());
+    ourShader.setVecTwo("res", glm::vec2(SCR_WIDTH, SCR_HEIGHT));
 
     Renderer ra;
     ra.AddVertexArray(&va.m_RendererID);
