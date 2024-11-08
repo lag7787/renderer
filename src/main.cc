@@ -25,7 +25,7 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 2560;
 const unsigned int SCR_HEIGHT = 1440;
 
-Camera camera(glm::vec3(0.0, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0, 0.0f, 3.0f)); // had to declare camera in global scope in oreder for it to be aceessed in callbacks
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -125,17 +125,25 @@ int main() {
   //  };
 
     float vertices[] = {
-        -0.5f, -0.5f, 1.0f, /// dunno if to do 0.0 or 1.0
+        0.5f, 0.5f, 1.0f,
         0.5f, -0.5f, 1.0f,
-        0.0f, 0.5f, 1.0f
+        -0.5f, -0.5f, 1.0f, 
+        -0.5f, 0.5f, 1.0f
+    };
+
+    unsigned int indicies[] = {
+        0,1,3,
+        1,2,3
     };
 
     VertexArray va;
     VertexBuffer vb(vertices, sizeof(vertices));
+    IndexBuffer ib(indicies, sizeof(indicies));
     VertexBufferLayout layout;
     layout.Push<float>(3); // Positions
     //layout.Push<float>(2); // Texture
     va.AddBuffer(vb, layout);
+    /// dont have to add a buffer for index?
 
     stbi_set_flip_vertically_on_load(true);
 
@@ -176,7 +184,7 @@ int main() {
     ourShader.use();
     ourShader.setInt("texture1", tex1.GetTextureNumber()); //creating a unifrom to refernce texture units? 
     ourShader.setInt("texture2", tex2.GetTextureNumber());
-    ourShader.setVecTwo("res", glm::vec2(SCR_WIDTH, SCR_HEIGHT));
+    ourShader.setVecTwo("u_res", glm::vec2(SCR_WIDTH, SCR_HEIGHT));
 
     Renderer ra;
     ra.AddVertexArray(&va.m_RendererID);
@@ -212,9 +220,13 @@ int main() {
     projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     ourShader.setMatFour("projection", projection);
     glm::mat4 model = glm::mat4(1.0f);
+    //model = glm::translate(model, glm::vec3(0,0,-5));
+    //model = glm::scale(model, glm::vec3(3,2,1));
     ourShader.setMatFour("model", model);
+    ourShader.setFloat("u_time", glfwGetTime());
 
-    ra.Draw(GL_TRIANGLES, 6);
+    //ra.Draw(GL_TRIANGLES, 6);
+    ra.DrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT);
 
    // for (unsigned int i = 0; i < 10; i++) {
    //     glm::mat4 model = glm::mat4(1.0f);
@@ -241,6 +253,7 @@ void frameBufferSizeCallback(GLFWwindow* window, int width, int height)
 }   
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn) {
+
     float xpos = static_cast<float>(xposIn);
     float ypos = static_cast<float>(yposIn);
 

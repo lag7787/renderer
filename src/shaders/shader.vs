@@ -14,10 +14,6 @@ out vec4 ourPosition;
 void main()
 {
     gl_Position =  projection * view * model * vec4(aPos.x + horizontalOffset, aPos.y + verticalOffset, aPos.z, 1.0);
-    //gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
     ourPosition =  gl_Position;
     TexCoord = aTexCoord;
 }
-
-
-// proboably have some sort of bool and conditionally apply one transform or another 

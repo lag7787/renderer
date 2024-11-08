@@ -2,26 +2,23 @@
 out vec4 FragColor;
 
 in vec2 TexCoord;
-
 in vec4 ourPosition;
 
-// assigning texture units to the sampler
 uniform sampler2D texture1;
 uniform sampler2D texture2; 
-uniform vec2 res;
 
-uniform float face_opacity;
+uniform float face_opacity; // should also be u_face_opacity
+uniform float u_time;
+uniform vec2 u_res;
+
+float plot(vec2 st) {
+    return smoothstep(0.02, 0.0, abs(st.y - st.x));
+}
 
 void main()
 {
-    ///FragColor = mix(texture(texture1, TexCoord), texture(texture2, TexCoord), face_opacity);
-    vec2 st = gl_FragCoord.xy/res;
-    float pct = 0.0;
-    pct = distance(st, vec2(0.5));
+    vec2 st = gl_FragCoord.xy/u_res;
+    FragColor = vec4(st.x, st.y, 0.0, 1.0);
 
-
-    vec3 color = vec3(pct);
-
-    FragColor = vec4(color, 1.0);
 }
    
