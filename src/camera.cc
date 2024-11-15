@@ -70,14 +70,23 @@ public:
     void ProcessKeyboard(Camera_Movement direction, float deltaTime)
     {
         float velocity = MovementSpeed * deltaTime;
+       // if (direction == FORWARD)
+       //     Position += glm::vec3((Front * velocity).x, Position.y, (Front * velocity).z);
+       // if (direction == BACKWARD)
+       //     Position -= glm::vec3((Front * velocity).x, Position.y, (Front * velocity).z);
+       // if (direction == LEFT)
+       //     Position -= glm::vec3((Right * velocity).x, Position.y, (Right * velocity).z);
+       // if (direction == RIGHT)
+       //     Position += glm::vec3((Right * velocity).x, Position.y, (Right * velocity).z);
+
         if (direction == FORWARD)
-            Position += glm::vec3((Front * velocity).x, Position.y, (Front * velocity).z);
+            Position += glm::vec3((Front * velocity).x, (Front * velocity).y, (Front * velocity).z);
         if (direction == BACKWARD)
-            Position -= glm::vec3((Front * velocity).x, Position.y, (Front * velocity).z);
+            Position -= glm::vec3((Front * velocity).x, (Front * velocity).y, (Front * velocity).z);
         if (direction == LEFT)
-            Position -= glm::vec3((Right * velocity).x, Position.y, (Right * velocity).z);
+            Position -= glm::vec3((Right * velocity).x, (Front * velocity).y, (Right * velocity).z);
         if (direction == RIGHT)
-            Position += glm::vec3((Right * velocity).x, Position.y, (Right * velocity).z);
+            Position += glm::vec3((Right * velocity).x, (Front * velocity).y, (Right * velocity).z);
     }
 
     // processes input received from a mouse input system. Expects the offset value in both the x and y direction.
