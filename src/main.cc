@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/constants.hpp>
 #include "glad/glad.h"
 #include "glfw3.h"
 #include "shader.h"
@@ -24,7 +25,7 @@ void processInput(GLFWwindow *window);
 const unsigned int SCR_WIDTH = 2560;
 const unsigned int SCR_HEIGHT = 1440;
 
-Camera camera(glm::vec3(0.0, 0.0f, 3.0f));
+Camera camera(glm::vec3(-1.0, 0.0f, 8.0f));
 float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
@@ -114,7 +115,7 @@ int main() {
     };
 
     glm::vec3 cubePos = glm::vec3(0.0f, 0.0f, 0.0f);
-    glm::vec3 lightPos = glm::vec3(1.2f, 1.0f, 2.0f);
+    glm::vec3 lightPos = glm::vec3(0.0f, 0.0f, 4.0f);
 
     VertexArray lightVa;
     VertexArray va;
@@ -135,6 +136,10 @@ int main() {
     // an iteration of the render loop is called a frame
    while (!glfwWindowShouldClose(window)) {
     float currentFrame = glfwGetTime();
+    // i think i could send in deltime to make it more uniform...
+    // if light pos is required in both, then i think it should be a CPU calc
+    // unless we also calculate sin in both shaders...
+    // send in current frame to both... then try adding delta times... 
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 
@@ -143,11 +148,13 @@ int main() {
     ra.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     va.Bind(); 
 
+    //lightPos = glm::vec3(4.0 * glm::cos(glm::pi<float>() *  currentFrame / 4), 4.0 * glm::sin(glm::pi<float>() * currentFrame / 4), lightPos.z);
     ourShader.use();
 
     ourShader.setVecThree("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
     ourShader.setVecThree("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
     ourShader.setVecThree("lightPos", lightPos);
+    ourShader.setVecThree("viewPos", camera.Position);
 
     view = camera.GetViewMatrix();
     ourShader.setMatFour("view", view);
@@ -156,8 +163,8 @@ int main() {
 
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, cubePos);
+    //model = glm::rotate(model, glm::pi<float>() * currentFrame / 2, glm::vec3(0.0,1.0,0.0));
     float angle = 20.0f * 0;
-    model = glm::rotate(model, glm::radians(angle) , glm::vec3(1.0f, 0.3f, 0.5f));
     ourShader.setMatFour("model", model);
     ra.Draw(GL_TRIANGLES, 36);
 

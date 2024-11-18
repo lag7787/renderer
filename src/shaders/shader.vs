@@ -15,7 +15,8 @@ void main()
 {
     gl_Position =  projection * view * model * vec4(aPos.x + horizontalOffset, aPos.y + verticalOffset, aPos.z, 1.0);
     FragPos = vec3(model * vec4(aPos, 1.0));
-    normal = aNormal;
+    normal = mat3(transpose(inverse(model))) * aNormal;
+    // inverting a matrix is a costly operation to do on the GPU
 }
 
 
