@@ -1,0 +1,3 @@
+/home/lucgarabrant/projects/renderer/build/CMakeFiles/opengl.dir
+/home/lucgarabrant/projects/renderer/build/CMakeFiles/edit_cache.dir
+/home/lucgarabrant/projects/renderer/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,56 @@
+[
+{
+  "directory": "/home/lucgarabrant/projects/renderer/build",
+  "command": "/usr/bin/c++  -I/home/lucgarabrant/projects/renderer/include  -o CMakeFiles/opengl.dir/src/main.cc.o -c /home/lucgarabrant/projects/renderer/src/main.cc",
+  "file": "/home/lucgarabrant/projects/renderer/src/main.cc",
+  "output": "CMakeFiles/opengl.dir/src/main.cc.o"
+},
+{
+  "directory": "/home/lucgarabrant/projects/renderer/build",
+  "command": "/usr/bin/cc  -I/home/lucgarabrant/projects/renderer/include -g -o CMakeFiles/opengl.dir/src/glad.c.o -c /home/lucgarabrant/projects/renderer/src/glad.c",
+  "file": "/home/lucgarabrant/projects/renderer/src/glad.c",
+  "output": "CMakeFiles/opengl.dir/src/glad.c.o"
+},
+{
+  "directory": "/home/lucgarabrant/projects/renderer/build",
+  "command": "/usr/bin/c++  -I/home/lucgarabrant/projects/renderer/include  -o CMakeFiles/opengl.dir/src/shader.cc.o -c /home/lucgarabrant/projects/renderer/src/shader.cc",
+  "file": "/home/lucgarabrant/projects/renderer/src/shader.cc",
+  "output": "CMakeFiles/opengl.dir/src/shader.cc.o"
+},
+{
+  "directory": "/home/lucgarabrant/projects/renderer/build",
+  "command": "/usr/bin/c++  -I/home/lucgarabrant/projects/renderer/include  -o CMakeFiles/opengl.dir/src/stb_image.cc.o -c /home/lucgarabrant/projects/renderer/src/stb_image.cc",
+  "file": "/home/lucgarabrant/projects/renderer/src/stb_image.cc",
+  "output": "CMakeFiles/opengl.dir/src/stb_image.cc.o"
+},
+{
+  "directory": "/home/lucgarabrant/projects/renderer/build",
+  "command": "/usr/bin/c++  -I/home/lucgarabrant/projects/renderer/include  -o CMakeFiles/opengl.dir/src/vertex_buffer.cc.o -c /home/lucgarabrant/projects/renderer/src/vertex_buffer.cc",
+  "file": "/home/lucgarabrant/projects/renderer/src/vertex_buffer.cc",
+  "output": "CMakeFiles/opengl.dir/src/vertex_buffer.cc.o"
+},
+{
+  "directory": "/home/lucgarabrant/projects/renderer/build",
+  "command": "/usr/bin/c++  -I/home/lucgarabrant/projects/renderer/include  -o CMakeFiles/opengl.dir/src/index_buffer.cc.o -c /home/lucgarabrant/projects/renderer/src/index_buffer.cc",
+  "file": "/home/lucgarabrant/projects/renderer/src/index_buffer.cc",
+  "output": "CMakeFiles/opengl.dir/src/index_buffer.cc.o"
+},
+{
+  "directory": "/home/lucgarabrant/projects/renderer/build",
+  "command": "/usr/bin/c++  -I/home/lucgarabrant/projects/renderer/include  -o CMakeFiles/opengl.dir/src/renderer.cc.o -c /home/lucgarabrant/projects/renderer/src/renderer.cc",
+  "file": "/home/lucgarabrant/projects/renderer/src/renderer.cc",
+  "output": "CMakeFiles/opengl.dir/src/renderer.cc.o"
+},
+{
+  "directory": "/home/lucgarabrant/projects/renderer/build",
+  "command": "/usr/bin/c++  -I/home/lucgarabrant/projects/renderer/include  -o CMakeFiles/opengl.dir/src/vertex_array.cc.o -c /home/lucgarabrant/projects/renderer/src/vertex_array.cc",
+  "file": "/home/lucgarabrant/projects/renderer/src/vertex_array.cc",
+  "output": "CMakeFiles/opengl.dir/src/vertex_array.cc.o"
+},
+{
+  "directory": "/home/lucgarabrant/projects/renderer/build",
+  "command": "/usr/bin/c++  -I/home/lucgarabrant/projects/renderer/include  -o CMakeFiles/opengl.dir/src/texture.cc.o -c /home/lucgarabrant/projects/renderer/src/texture.cc",
+  "file": "/home/lucgarabrant/projects/renderer/src/texture.cc",
+  "output": "CMakeFiles/opengl.dir/src/texture.cc.o"
+}
+]

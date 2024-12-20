@@ -6,7 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "glad/glad.h"
-#include "glfw3.h"
+#include <GLFW/glfw3.h>
 #include "shader.h"
 #include "stb_image.h"
 #include "renderer.h"
@@ -59,8 +59,8 @@ int main() {
     }
 
     Shader ourShader(
-        "/home/lucgarabrant/Documents/Projects/openglcc/src/shaders/shader.vs",
-        "/home/lucgarabrant/Documents/Projects/openglcc/src/shaders/shader.fs"
+        "/home/lucgarabrant/projects/renderer/src/shaders/shader.vs",
+        "/home/lucgarabrant/projects/renderer/src/shaders/shader.fs"
     );
 
 
@@ -108,6 +108,15 @@ int main() {
     -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
 
+//    float vertices[] = {
+//        0.5f, -0.5f, 0.0f, 
+//        1.0f, 0.0f, 0.0f,  // bottom right
+//        -0.5f, -0.5f, 0.0f, 
+//        0.0f, 1.0f, 0.0f,  // bottom left
+//        0.0f,  0.5f, 0.0f,
+//        0.0f, 0.0f, 1.0f   // top 
+//    };
+
     glm::vec3 cubePositions[] = {
         glm::vec3( 0.0f,  0.0f,  0.0f), 
         glm::vec3( 2.0f,  5.0f, -15.0f), 
@@ -138,7 +147,7 @@ int main() {
 
     int width, height, nrChannels;
 
-    unsigned char* data = stbi_load("/home/lucgarabrant/Documents/Projects/openglcc/assets/container.jpg", &width, &height, &nrChannels, 0);
+    unsigned char* data = stbi_load("/home/lucgarabrant/projects/renderer/assets/container.jpg", &width, &height, &nrChannels, 0);
     if(data) {
         tex1.BuildImage(width, height, data, GL_RGB, GL_RGB);
         tex1.GenerateMipMip();
@@ -153,7 +162,7 @@ int main() {
     tex2.AddParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     tex2.AddParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    data = stbi_load("/home/lucgarabrant/Documents/Projects/openglcc/assets/awesomeface.png", &width, &height, &nrChannels, 0);
+    data = stbi_load("/home/lucgarabrant/projects/renderer/assets/awesomeface.png", &width, &height, &nrChannels, 0);
     if (data) {
         tex2.BuildImage(width, height, data, GL_RGBA, GL_RGBA);
         tex1.GenerateMipMip();
@@ -202,6 +211,7 @@ int main() {
         ra.Draw(GL_TRIANGLES, 36);
     }
     // could we do it with uniforms? 
+    ra.Draw(GL_TRIANGLES, 3);
     glfwSwapBuffers(window);
     glfwPollEvents();
    }
@@ -254,4 +264,5 @@ void processInput(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
 }
+
 
